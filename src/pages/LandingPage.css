@@ -1,0 +1,140 @@
+.landing-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--color-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+.landing-page.fade-in {
+  opacity: 1;
+}
+
+.landing-nav {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.nav-link {
+  color: var(--color-white);
+  transition: color 150ms ease;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--color-gold);
+}
+
+.nav-divider {
+  color: var(--color-gold);
+}
+
+.landing-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+
+.logo {
+  margin-bottom: 16px;
+}
+
+.brand-name {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: 2px;
+}
+
+.tagline {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.module-line {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-white);
+  opacity: 0.6;
+  max-width: 600px;
+}
+
+.divider-line {
+  width: 80px;
+  height: 1px;
+  background-color: var(--color-gold);
+  margin: 8px 0;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.primary-cta,
+.secondary-cta {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 4px;
+  transition: all 150ms ease;
+  background-color: transparent;
+  border: 2px solid var(--color-gold);
+  color: var(--color-white);
+}
+
+.primary-cta:hover,
+.secondary-cta:hover {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .landing-nav {
+    top: 24px;
+    right: 24px;
+  }
+
+  .brand-name {
+    font-size: 32px;
+  }
+
+  .tagline {
+    font-size: 20px;
+  }
+
+  .module-line {
+    font-size: 16px;
+    padding: 0 32px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 32px;
+  }
+
+  .primary-cta,
+  .secondary-cta {
+    width: 100%;
+  }
+}
+

@@ -1,0 +1,48 @@
+.office-page {
+  min-height: 100vh;
+  background-color: var(--color-black);
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+.office-page.fade-in {
+  opacity: 1;
+}
+
+.office-content {
+  padding-top: 128px;
+  min-height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.office-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  border-top: 1px solid var(--color-gray);
+  background-color: var(--color-black);
+}
+
+.office-footer .divider {
+  margin: 0 6px;
+  color: rgba(212, 175, 55, 0.4);
+}
+
+.coach-k-status {
+  color: rgba(212, 175, 55, 0.6);
+}
+
+@media (max-width: 768px) {
+  .office-content {
+    padding-top: 96px;
+  }
+}
+
