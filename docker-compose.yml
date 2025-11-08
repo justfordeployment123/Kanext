@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  kanext-iq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kanext-iq-app
+    ports:
+      - "7481:7481"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+
