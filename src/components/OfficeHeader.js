@@ -1,17 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { logout } from '../services/authService';
 import Icon from './Icon';
 import './OfficeHeader.css';
 
 const OfficeHeader = ({ onOpenDrawer }) => {
   const navigate = useNavigate();
-  const { coachProfile, coachingBias, teamState, toggleCoachK } = useApp();
+  const { coachProfile, coachingBias, teamState, toggleCoachK, setCoachProfile } = useApp();
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
-      localStorage.clear();
-      navigate('/');
+      logout();
+      setCoachProfile(null);
+      navigate('/login');
     }
   };
 
@@ -28,19 +30,19 @@ const OfficeHeader = ({ onOpenDrawer }) => {
         <div className="header-center">
           <button className="quick-tab" onClick={() => navigate('/player-iq')}>
             <Icon name="user" size={16} />
-            <span>Players</span>
+            <span>Player IQ</span>
           </button>
           <button className="quick-tab" onClick={() => navigate('/team-iq')}>
             <Icon name="team" size={16} />
-            <span>Team</span>
+            <span>Team IQ™</span>
           </button>
           <button className="quick-tab" onClick={() => navigate('/recruiting-iq')}>
             <Icon name="clipboard" size={16} />
-            <span>Recruiting</span>
+            <span>Recruiting IQ™</span>
           </button>
-          <button className="quick-tab" onClick={() => navigate('/predixt')}>
-            <Icon name="chart" size={16} />
-            <span>Predict</span>
+          <button className="quick-tab" onClick={onOpenDrawer}>
+            <Icon name="brain" size={16} />
+            <span>Coaching IQ™</span>
           </button>
         </div>
 

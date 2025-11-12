@@ -1,4 +1,5 @@
 node_modules
+backend/node_modules
 npm-debug.log
 .git
 .gitignore
@@ -9,4 +10,10 @@ build
 .vscode
 .idea
 *.log
-
+backend/data
+backend/.env
+clear-cache.html
+start-dev.sh
+AUTHENTICATION.md
+DEPLOYMENT.md
+START_BACKEND.md

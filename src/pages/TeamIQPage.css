@@ -221,10 +221,108 @@
   cursor: pointer;
 }
 
+.panel-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--color-gray);
+}
+
+.panel-tabs button {
+  padding: 8px 16px;
+  background-color: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 150ms ease;
+}
+
+.panel-tabs button:hover {
+  color: var(--color-white);
+}
+
+.panel-tabs button.active {
+  color: var(--color-gold);
+  border-bottom-color: var(--color-gold);
+}
+
 .panel-content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 16px;
+  min-height: 200px;
+}
+
+.notes-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  background-color: var(--color-black);
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-gray);
+}
+
+.secondary-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: transparent;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.secondary-btn:hover {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+.danger-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: transparent;
+  border: 1px solid var(--color-red);
+  color: var(--color-red);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.danger-btn:hover {
+  background-color: var(--color-red);
+  color: var(--color-white);
+}
+
+.depth-chart-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.team-evaluation-panel {
+  margin-top: 24px;
+  padding: 24px;
+  background-color: var(--color-dark-gray);
+  border: 1px solid var(--color-gold);
+  border-radius: 8px;
 }
 
 .detail-row {
@@ -320,6 +418,11 @@
 .position-slots {
   padding: 12px;
   min-height: 200px;
+  transition: background-color 150ms ease;
+}
+
+.position-column.drag-over {
+  background-color: rgba(212, 175, 55, 0.1);
 }
 
 .player-card {
@@ -328,6 +431,17 @@
   background-color: rgba(212, 175, 55, 0.1);
   border: 1px solid var(--color-gold);
   border-radius: 4px;
+  cursor: move;
+  transition: all 150ms ease;
+}
+
+.player-card:hover {
+  background-color: rgba(212, 175, 55, 0.2);
+  transform: scale(1.02);
+}
+
+.player-card:active {
+  opacity: 0.7;
 }
 
 .card-name {

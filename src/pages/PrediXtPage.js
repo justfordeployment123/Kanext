@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { isAuthenticated } from '../services/authService';
 import './PrediXtPage.css';
 
 const PrediXtPage = () => {
@@ -21,6 +22,11 @@ const PrediXtPage = () => {
       alert('Please select an opponent');
       return;
     }
+
+    console.log('[LOGIC HOOK: handleRunSimulation] Running PrediXt:', {
+      mode: simulationMode,
+      opponent: opponent || 'N/A (Full Season)'
+    });
 
     setLoading(true);
 
@@ -57,8 +63,13 @@ const PrediXtPage = () => {
     }, 2000);
   };
 
-  if (!coachProfile) {
-    navigate('/login');
+  useEffect(() => {
+    if (!isAuthenticated() || !coachProfile) {
+      navigate('/login');
+    }
+  }, [navigate, coachProfile]);
+
+  if (!isAuthenticated() || !coachProfile) {
     return null;
   }
 
@@ -77,59 +88,97 @@ const PrediXtPage = () => {
             </div>
           </div>
           <div className="header-right">
+            <div className="conference-snapshot">
+              <span className="snapshot-label">📊 Conference View</span>
+            </div>
             <button className="nav-btn" onClick={() => navigate('/team-iq')}>
-              🏀 Team IQ™
+              Team IQ™
             </button>
             <button className="nav-btn" onClick={() => navigate('/office')}>
-              🏠 Office
+              Return to Office
             </button>
           </div>
         </div>
       </header>
 
-      {/* Simulation Controls */}
-      <div className="simulation-controls">
-        <h2>Run Simulation</h2>
-        
+      {/* Header Summary Line */}
+      <div className="header-summary">
+        <div className="summary-item">
+          <span className="label">Record:</span>
+          <span className="value">0-0</span>
+        </div>
+        <div className="summary-item">
+          <span className="label">Conference Rank:</span>
+          <span className="value">—</span>
+        </div>
+          <div className="summary-item">
+            <span className="label">KPI vs Conference Avg:</span>
+            <span className="value">+0.0</span>
+          </div>
+          <div className="summary-item collapsible" onClick={() => alert('Division + Conference Snapshot')}>
+            <span className="label">📊 Conference View</span>
+          </div>
+        </div>
+
+      {/* Simulation Controls - In Header Center */}
+      <div className="simulation-controls-header">
+        <div className="opponent-selector">
+          <label>Select Opponent</label>
+          <select
+            value={opponent}
+            onChange={(e) => setOpponent(e.target.value)}
+          >
+            <option value="">Select Opponent</option>
+            <option value="Howard College">Howard College</option>
+            <option value="Odessa JC">Odessa JC</option>
+            <option value="Clarendon JC">Clarendon JC</option>
+            <option value="Dallas CC">Dallas CC</option>
+          </select>
+        </div>
         <div className="mode-toggle">
           <button 
             className={simulationMode === 'single' ? 'active' : ''}
-            onClick={() => setSimulationMode('single')}
+            onClick={() => {
+              setSimulationMode('single');
+              console.log('[LOGIC HOOK: handleSimulationModeChange] Mode changed to: Single Game');
+            }}
           >
             Single Game
           </button>
           <button 
             className={simulationMode === 'season' ? 'active' : ''}
-            onClick={() => setSimulationMode('season')}
+            onClick={() => {
+              setSimulationMode('season');
+              console.log('[LOGIC HOOK: handleSimulationModeChange] Mode changed to: Full Season');
+            }}
           >
             Full Season
           </button>
         </div>
-
-        {simulationMode === 'single' && (
-          <div className="opponent-selector">
-            <label>Select Opponent</label>
-            <input
-              type="text"
-              value={opponent}
-              onChange={(e) => setOpponent(e.target.value)}
-              placeholder="Enter opponent team name"
-            />
-          </div>
-        )}
-
         <button 
           className="run-btn"
           onClick={handleRunSimulation}
           disabled={loading}
         >
-          {loading ? '▶ Running Simulation...' : '▶ Run PrediXt™'}
+          {loading ? '▶ Running...' : '▶ Run PrediXt'}
         </button>
       </div>
 
-      {/* Results */}
-      {simulationResult && (
-        <div className="simulation-results">
+      {/* Body Content - Placeholder Structure */}
+      <div className="predixt-content">
+        {!simulationResult ? (
+          <div className="placeholder-structure">
+            <div className="placeholder-section">
+              <h3>Team Context & Scoreline</h3>
+              <p className="placeholder-text">Simulation results will appear here</p>
+            </div>
+            <div className="placeholder-section">
+              <h3>Player Impact Highlights</h3>
+              <p className="placeholder-text">Key player contributions will be displayed here</p>
+            </div>
+          </div>
+        ) : (
+          <div className="simulation-results">
           {simulationResult.mode === 'single' ? (
             <div className="single-game-result">
               <h2>Single Game Prediction</h2>
@@ -189,17 +238,10 @@ const PrediXtPage = () => {
               </div>
             </div>
           )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
-      {/* Empty State */}
-      {!simulationResult && !loading && (
-        <div className="empty-state">
-          <div className="empty-icon">📊</div>
-          <h3>Ready to Forecast</h3>
-          <p>Select a simulation mode and run PrediXt™ to see predictions based on your Team IQ™ data.</p>
-        </div>
-      )}
     </div>
   );
 };

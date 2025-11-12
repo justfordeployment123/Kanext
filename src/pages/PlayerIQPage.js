@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { isAuthenticated } from '../services/authService';
 import './PlayerIQPage.css';
 
 const PlayerIQPage = () => {
@@ -23,6 +24,8 @@ const PlayerIQPage = () => {
     e.preventDefault();
     setLoading(true);
 
+    console.log('[LOGIC HOOK: handleRunScope] Running Lifeline Scope with parameters:', searchData);
+
     // Simulate AI scraping
     setTimeout(() => {
       const mockResult = {
@@ -37,6 +40,7 @@ const PlayerIQPage = () => {
         eligibility: 'Active'
       };
 
+      console.log('[LOGIC HOOK: handleRunScope] Scope results:', mockResult);
       setScopeResult(mockResult);
       setSearchMode(false);
       setLoading(false);
@@ -45,6 +49,7 @@ const PlayerIQPage = () => {
 
   const handleRunEvaluation = () => {
     setLoading(true);
+    console.log('[LOGIC HOOK: handleRunEvaluation] Running Full Evaluation for player:', scopeResult?.name);
 
     setTimeout(() => {
       const confidence = scopeResult.confidence;
@@ -63,6 +68,7 @@ const PlayerIQPage = () => {
         kpgLine: `${(finalKPI * 0.2).toFixed(1)} pts · ${(finalKPI * 0.06).toFixed(1)} ast · ${(finalKPI * 0.03).toFixed(1)} reb`
       };
 
+      console.log('[LOGIC HOOK: handleRunEvaluation] Evaluation complete:', evaluation);
       setEvaluationResult(evaluation);
       setLoading(false);
     }, 2000);
@@ -81,11 +87,22 @@ const PlayerIQPage = () => {
         nil: evaluationResult.nilValue
       };
 
+      console.log('[LOGIC HOOK: Sync] Syncing player to Team IQ:', playerProfile);
       addPlayerProfile(playerProfile);
       addToRoster(playerProfile);
       
       alert('✅ Player synced to Team IQ™');
       handleReset();
+    }
+  };
+
+  const handleSyncToRecruitingIQ = () => {
+    if (evaluationResult) {
+      console.log('[LOGIC HOOK: Sync] Syncing player to Recruiting IQ:', {
+        playerId: evaluationResult.name,
+        playerData: evaluationResult
+      });
+      alert('✅ Player synced to Recruiting IQ™');
     }
   };
 
@@ -96,8 +113,13 @@ const PlayerIQPage = () => {
     setSearchData({ playerName: '', school: '', classYear: '', position: '' });
   };
 
-  if (!coachProfile) {
-    navigate('/login');
+  useEffect(() => {
+    if (!isAuthenticated() || !coachProfile) {
+      navigate('/login');
+    }
+  }, [navigate, coachProfile]);
+
+  if (!isAuthenticated() || !coachProfile) {
     return null;
   }
 
@@ -112,16 +134,27 @@ const PlayerIQPage = () => {
             {coachProfile.team} · {coachingBias?.offensiveSystem || coachProfile.offense} · 
             {coachingBias?.defensiveSystem || coachProfile.defense} · {coachProfile.division}
           </div>
+          <div 
+            className={`coaching-iq-chip ${coachingBias ? 'active' : 'incomplete'}`}
+            onClick={() => {
+              console.log('[LOGIC HOOK] Opening Coaching IQ Drawer from Player IQ header');
+              const event = new CustomEvent('openCoachingIQDrawer');
+              window.dispatchEvent(event);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            {coachingBias ? 'Coaching IQ Active' : 'Set Up Required'}
+          </div>
         </div>
         <div className="header-right">
           <button className="nav-btn" onClick={() => navigate('/team-iq')}>
-            🏀 Team IQ™
+            Team IQ™
           </button>
           <button className="nav-btn" onClick={() => navigate('/recruiting-iq')}>
-            📋 Recruiting IQ™
+            Recruiting IQ™
           </button>
           <button className="nav-btn" onClick={() => navigate('/office')}>
-            🏠 Office
+            Return to Office
           </button>
         </div>
       </header>
@@ -301,6 +334,9 @@ const PlayerIQPage = () => {
                 <div className="actions">
                   <button className="secondary-btn" onClick={handleReset}>
                     New Evaluation
+                  </button>
+                  <button className="secondary-btn" onClick={handleSyncToRecruitingIQ}>
+                    Add to Recruiting IQ™
                   </button>
                   <button className="primary-btn" onClick={handleSyncToTeamIQ}>
                     Add to Team IQ™

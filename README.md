@@ -80,22 +80,62 @@ KaNeXT IQ™ is a comprehensive basketball analytics and intelligence platform d
 cd rough
 ```
 
-2. Install dependencies:
+2. Install frontend dependencies:
 ```bash
 npm install
 ```
 
-3. Start the development server:
+3. Install backend dependencies:
+```bash
+cd backend
+npm install
+cd ..
+```
+
+### Running the Application
+
+#### Option 1: Start Both Servers (Recommended)
+```bash
+# Start both frontend and backend
+./start-dev.sh
+```
+
+#### Option 2: Start Separately
+
+**Terminal 1 - Backend:**
+```bash
+cd backend
+npm start
+# Backend runs on http://localhost:3001
+```
+
+**Terminal 2 - Frontend:**
 ```bash
 npm start
+# Frontend runs on http://localhost:3000
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Backend API
+
+The backend server provides JWT authentication:
+- **Port**: 3001
+- **Health Check**: http://localhost:3001/api/health
+- **API Base URL**: http://localhost:3001/api
+
+See `backend/README.md` for detailed API documentation.
 
 ## 📁 Project Structure
 
 ```
 rough/
+├── backend/                 # Backend API Server
+│   ├── server.js           # Express server with JWT auth
+│   ├── package.json
+│   ├── .env                # Environment variables
+│   ├── data/               # JSON database (auto-created)
+│   └── README.md
 ├── public/
 │   └── index.html
 ├── src/
@@ -103,7 +143,8 @@ rough/
 │   │   ├── OfficeHeader.js
 │   │   ├── CoachingIQDrawer.js
 │   │   ├── ModulePanels.js
-│   │   └── CoachKAssistant.js
+│   │   ├── CoachKAssistant.js
+│   │   └── ProtectedRoute.js
 │   ├── context/
 │   │   └── AppContext.js
 │   ├── pages/
@@ -114,20 +155,32 @@ rough/
 │   │   ├── TeamIQPage.js
 │   │   ├── RecruitingIQPage.js
 │   │   └── PrediXtPage.js
+│   ├── services/
+│   │   ├── authService.js  # JWT authentication
+│   │   └── api.js          # API client
 │   ├── App.js
 │   ├── index.js
 │   └── index.css
 ├── package.json
+├── start-dev.sh           # Start both servers
 └── README.md
 ```
 
 ## 🔧 Core Technologies
 
+### Frontend
 - **React 18** - UI framework
 - **React Router v6** - Client-side routing
 - **Context API** - Global state management
 - **LocalStorage** - Data persistence
 - **CSS3** - Styling with custom properties
+
+### Backend
+- **Express.js** - Web server framework
+- **JWT (jsonwebtoken)** - Authentication tokens
+- **bcryptjs** - Password hashing
+- **CORS** - Cross-origin resource sharing
+- **JSON File Storage** - Simple database (easily replaceable)
 
 ## 💾 Data Management
 
@@ -170,14 +223,25 @@ The application uses React Context API for state management and localStorage for
 3. Review win probabilities and projections
 4. Adjust roster based on insights
 
+## 🔐 Authentication
+
+The application uses JWT-based authentication:
+- User registration with password hashing
+- Secure login with token generation
+- Protected routes requiring authentication
+- Token expiration (24 hours)
+- Automatic token validation
+
+See `AUTHENTICATION.md` and `backend/README.md` for detailed documentation.
+
 ## 🔮 Future Enhancements
 
-- Backend API integration
 - Real-time data synchronization
 - Advanced analytics dashboards
 - Video integration for player evaluation
 - Mobile native applications
 - Multi-sport expansion
+- Database migration (MongoDB/PostgreSQL)
 
 ## 📄 License
 
@@ -192,4 +256,5 @@ For questions or support, please contact the development team.
 **Built with ⚡ by the KaNeXT IQ™ Team**
 
 *The Future of Sports Intelligence*
+
 

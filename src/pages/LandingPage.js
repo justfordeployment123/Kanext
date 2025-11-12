@@ -7,16 +7,17 @@ const LandingPage = () => {
   const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setFadeIn(true), 100);
+    // Fade-in animation on load (300ms as per spec)
+    setTimeout(() => setFadeIn(true), 0);
   }, []);
 
   return (
     <div className={`landing-page ${fadeIn ? 'fade-in' : ''}`}>
       {/* Top Right Navigation */}
       <div className="landing-nav">
-        <a href="/login" className="nav-link">Login</a>
+        <a href="/login" className="nav-link" onClick={(e) => { e.preventDefault(); navigate('/login'); }}>Login</a>
         <span className="nav-divider">·</span>
-        <a href="#about" className="nav-link">About</a>
+        <a href="/about" className="nav-link" onClick={(e) => { e.preventDefault(); navigate('/about'); }}>About</a>
       </div>
 
       {/* Center Content */}
@@ -28,7 +29,7 @@ const LandingPage = () => {
         <h2 className="tagline">The Future of Sports Intelligence</h2>
 
         <div className="module-line">
-          Basketball IQ™ — Guided by your AI Assistant, Coach K™.
+          Basketball IQ™ Guided by your AI Assistant, Coach K™
         </div>
 
         <div className="divider-line"></div>

@@ -40,12 +40,18 @@ const CoachingIQDrawer = ({ isOpen, onClose }) => {
   }, [coachProfile, coachingBias]);
 
   const handleApply = () => {
+    console.log('[LOGIC HOOK: handleApply] Applying Coaching IQ configuration:', formData);
     updateCoachingBias(formData);
     addCoachKMessage({
       speaker: 'Coach K',
       message: 'Program and financial context updated. Your Coaching IQ™ profile is now active.',
       type: 'success'
     });
+    onClose();
+  };
+
+  const handleCancel = () => {
+    console.log('[LOGIC HOOK: handleCancel] Cancelling Coaching IQ configuration changes');
     onClose();
   };
 
@@ -84,6 +90,7 @@ const CoachingIQDrawer = ({ isOpen, onClose }) => {
                 <option value="NCAA D2">NCAA D2</option>
                 <option value="NCAA D3">NCAA D3</option>
                 <option value="NAIA">NAIA</option>
+                <option value="NCCAA">NCCAA</option>
                 <option value="JUCO">JUCO</option>
                 <option value="USCAA">USCAA</option>
                 <option value="Pro">Pro</option>
@@ -189,7 +196,7 @@ const CoachingIQDrawer = ({ isOpen, onClose }) => {
         </div>
 
         <div className="drawer-footer">
-          <button className="cancel-btn" onClick={onClose}>Cancel</button>
+          <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
           <button className="apply-btn" onClick={handleApply}>Apply</button>
         </div>
       </div>

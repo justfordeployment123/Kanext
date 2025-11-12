@@ -84,9 +84,18 @@ const CoachKAssistant = () => {
   };
 
   const handleOpenCoachingIQ = () => {
+    console.log('[LOGIC HOOK: handleOpenCoachingIQ] Opening Coaching IQ Drawer');
     // Trigger opening the Coaching IQ drawer
     const event = new CustomEvent('openCoachingIQDrawer');
     window.dispatchEvent(event);
+  };
+
+  const handleQuickAction = (action) => {
+    console.log(`[LOGIC HOOK: handleQuickAction] Action: ${action}`);
+    // Navigation actions would go here
+    if (action === 'Go to Player IQ') {
+      window.location.href = '/player-iq';
+    }
   };
 
   // Minimized bubble state

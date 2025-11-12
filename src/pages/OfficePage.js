@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { isAuthenticated } from '../services/authService';
 import OfficeHeader from '../components/OfficeHeader';
 import CoachingIQDrawer from '../components/CoachingIQDrawer';
 import ModulePanels from '../components/ModulePanels';
@@ -14,8 +15,8 @@ const OfficePage = () => {
   const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
-    // Redirect if not logged in
-    if (!coachProfile) {
+    // Strict check: must have valid authentication token
+    if (!isAuthenticated() || !coachProfile) {
       navigate('/login');
       return;
     }
@@ -32,6 +33,17 @@ const OfficePage = () => {
         }));
       }, 500);
     }
+
+    // Listen for Coaching IQ drawer open event
+    const handleOpenDrawer = () => {
+      setShowDrawer(true);
+    };
+
+    window.addEventListener('openCoachingIQDrawer', handleOpenDrawer);
+
+    return () => {
+      window.removeEventListener('openCoachingIQDrawer', handleOpenDrawer);
+    };
   }, [coachProfile, coachingBias, navigate, setCoachKState]);
 
   if (!coachProfile) {

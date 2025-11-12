@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getCurrentUser, isAuthenticated } from '../services/authService';
 
 const AppContext = createContext();
 
@@ -11,11 +12,27 @@ export const useApp = () => {
 };
 
 export const AppProvider = ({ children }) => {
+  // Initialize coach profile ONLY from valid token - no localStorage fallback
+  const initializeProfile = () => {
+    if (isAuthenticated()) {
+      const user = getCurrentUser();
+      if (user) {
+        return {
+          name: user.fullName,
+          email: user.email,
+          team: user.teamName,
+          division: user.division,
+          offense: user.offensiveSystem,
+          defense: user.defensiveSystem
+        };
+      }
+    }
+    // No fallback - must have valid token
+    return null;
+  };
+
   // Coach Profile State
-  const [coachProfile, setCoachProfile] = useState(() => {
-    const saved = localStorage.getItem('coachProfile');
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [coachProfile, setCoachProfile] = useState(initializeProfile);
 
   // Coaching IQ / Bias State
   const [coachingBias, setCoachingBias] = useState(() => {
@@ -60,10 +77,44 @@ export const AppProvider = ({ children }) => {
     currentStage: 'welcome'
   });
 
-  // Persist to localStorage
+  // Cleanup stale data and sync profile with token on mount
   useEffect(() => {
-    if (coachProfile) {
+    // Clear all data if no valid token exists
+    if (!isAuthenticated()) {
+      localStorage.removeItem('coachProfile');
+      localStorage.removeItem('authToken');
+      setCoachProfile(null);
+      return;
+    }
+
+    // Sync profile from valid token
+    if (isAuthenticated() && !coachProfile) {
+      const user = getCurrentUser();
+      if (user) {
+        setCoachProfile({
+          name: user.fullName,
+          email: user.email,
+          team: user.teamName,
+          division: user.division,
+          offense: user.offensiveSystem,
+          defense: user.defensiveSystem
+        });
+      } else {
+        // Token exists but user data is invalid - clear everything
+        localStorage.removeItem('coachProfile');
+        localStorage.removeItem('authToken');
+        setCoachProfile(null);
+      }
+    }
+  }, []);
+
+  // Persist to localStorage only if authenticated
+  useEffect(() => {
+    if (coachProfile && isAuthenticated()) {
       localStorage.setItem('coachProfile', JSON.stringify(coachProfile));
+    } else if (!isAuthenticated()) {
+      // Clear profile if not authenticated
+      localStorage.removeItem('coachProfile');
     }
   }, [coachProfile]);
 

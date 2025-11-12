@@ -135,6 +135,7 @@
   background: var(--color-gray);
   border-radius: 3px;
   outline: none;
+  appearance: none;
   -webkit-appearance: none;
 }
 
@@ -155,6 +156,8 @@
   cursor: pointer;
   border-radius: 50%;
   border: none;
+  appearance: none;
+  -moz-appearance: none;
 }
 
 .weight-total {

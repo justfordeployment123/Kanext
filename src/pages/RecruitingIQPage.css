@@ -139,6 +139,11 @@
   color: var(--color-gold);
 }
 
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
 .action-btn {
   padding: 6px 12px;
   font-size: 12px;
@@ -239,8 +244,13 @@
   color: var(--color-gold);
 }
 
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .card-action-btn {
-  width: 100%;
+  flex: 1;
   padding: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -304,8 +314,182 @@
   cursor: pointer;
 }
 
+.detail-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-gray);
+  padding: 0 24px;
+}
+
+.detail-tabs button {
+  padding: 12px 20px;
+  background-color: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 150ms ease;
+}
+
+.detail-tabs button:hover {
+  color: var(--color-white);
+}
+
+.detail-tabs button.active {
+  color: var(--color-gold);
+  border-bottom-color: var(--color-gold);
+}
+
 .detail-content {
   padding: 24px;
+}
+
+.notes-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 12px;
+  background-color: var(--color-black);
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+
+.primary-btn {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--color-gold);
+  border: none;
+  color: var(--color-black);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.primary-btn:hover {
+  background-color: #E5C04A;
+}
+
+.primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secondary-btn {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: transparent;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.secondary-btn:hover {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 200ms ease-in-out;
+}
+
+.modal-content {
+  background-color: var(--color-dark-gray);
+  border: 2px solid var(--color-gold);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--color-gray);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.modal-header button {
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-body .form-group {
+  margin-bottom: 20px;
+}
+
+.modal-body .form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 8px;
+}
+
+.modal-body .form-group input,
+.modal-body .form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  background-color: var(--color-black);
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+  color: var(--color-white);
+}
+
+.modal-body .form-group input:focus,
+.modal-body .form-group select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.modal-footer {
+  padding: 24px;
+  border-top: 1px solid var(--color-gray);
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
 .detail-section {
