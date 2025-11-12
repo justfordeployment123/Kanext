@@ -42,7 +42,6 @@ COPY --from=backend-deps /app/backend/node_modules ./backend/node_modules
 COPY backend/server.js ./backend/
 COPY backend/start.sh ./backend/
 COPY backend/package.json ./backend/
-COPY backend/.env.example ./backend/.env.example
 
 # Make startup script executable
 RUN chmod +x /app/backend/start.sh

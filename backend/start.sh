@@ -5,6 +5,7 @@ mkdir -p data
 
 # Create .env file from example if it doesn't exist (for local development)
 # In Docker, environment variables are passed directly
+# Note: .env.example may not exist in Docker builds, which is fine
 if [ ! -f .env ] && [ -f .env.example ]; then
   echo "Creating .env file from .env.example..."
   cp .env.example .env
