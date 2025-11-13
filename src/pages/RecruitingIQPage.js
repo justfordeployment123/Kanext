@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { isAuthenticated } from '../services/authService';
+import CoachingIQDrawer from '../components/CoachingIQDrawer';
 import './RecruitingIQPage.css';
 
 // Mock player database
@@ -28,6 +29,7 @@ const RecruitingIQPage = () => {
   const [detailTab, setDetailTab] = useState('profile'); // profile, evaluation, notes
   const [viewMode, setViewMode] = useState('list'); // list or board
   const [showAddProspectModal, setShowAddProspectModal] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
   const [newProspect, setNewProspect] = useState({
     name: '',
     position: '',
@@ -91,7 +93,19 @@ const RecruitingIQPage = () => {
   useEffect(() => {
     if (!isAuthenticated() || !coachProfile) {
       navigate('/login');
+      return;
     }
+
+    // Listen for Coaching IQ drawer open event
+    const handleOpenDrawer = () => {
+      setShowDrawer(true);
+    };
+
+    window.addEventListener('openCoachingIQDrawer', handleOpenDrawer);
+
+    return () => {
+      window.removeEventListener('openCoachingIQDrawer', handleOpenDrawer);
+    };
   }, [navigate, coachProfile]);
 
   if (!isAuthenticated() || !coachProfile) {
@@ -452,6 +466,11 @@ const RecruitingIQPage = () => {
           </div>
         </div>
       )}
+
+      <CoachingIQDrawer 
+        isOpen={showDrawer} 
+        onClose={() => setShowDrawer(false)} 
+      />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { isAuthenticated } from '../services/authService';
+import CoachingIQDrawer from '../components/CoachingIQDrawer';
 import './PlayerIQPage.css';
 
 const PlayerIQPage = () => {
@@ -19,6 +20,7 @@ const PlayerIQPage = () => {
   const [scopeResult, setScopeResult] = useState(null);
   const [evaluationResult, setEvaluationResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
 
   const handleRunScope = async (e) => {
     e.preventDefault();
@@ -116,7 +118,19 @@ const PlayerIQPage = () => {
   useEffect(() => {
     if (!isAuthenticated() || !coachProfile) {
       navigate('/login');
+      return;
     }
+
+    // Listen for Coaching IQ drawer open event
+    const handleOpenDrawer = () => {
+      setShowDrawer(true);
+    };
+
+    window.addEventListener('openCoachingIQDrawer', handleOpenDrawer);
+
+    return () => {
+      window.removeEventListener('openCoachingIQDrawer', handleOpenDrawer);
+    };
   }, [navigate, coachProfile]);
 
   if (!isAuthenticated() || !coachProfile) {
@@ -347,6 +361,11 @@ const PlayerIQPage = () => {
           </div>
         )}
       </div>
+
+      <CoachingIQDrawer 
+        isOpen={showDrawer} 
+        onClose={() => setShowDrawer(false)} 
+      />
     </div>
   );
 };
