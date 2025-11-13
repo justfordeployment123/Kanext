@@ -211,8 +211,9 @@ const TeamIQPage = () => {
         <button 
           type="button"
           className={`tab ${activeView === 'roster' ? 'active' : ''}`}
-          onClick={() => {
-            console.log('[LOGIC HOOK] Switching to Roster View');
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log('[LOGIC HOOK] Switching to Roster View, current:', activeView);
             setActiveView('roster');
           }}
         >
@@ -221,8 +222,9 @@ const TeamIQPage = () => {
         <button 
           type="button"
           className={`tab ${activeView === 'depth' ? 'active' : ''}`}
-          onClick={() => {
-            console.log('[LOGIC HOOK] Switching to Depth Chart View');
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log('[LOGIC HOOK] Switching to Depth Chart View, current:', activeView);
             setActiveView('depth');
           }}
         >
