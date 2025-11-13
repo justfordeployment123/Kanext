@@ -71,21 +71,16 @@
 }
 
 .view-tabs {
-  position: fixed;
-  top: 120px;
-  left: 0;
-  right: 0;
   display: flex;
   background-color: var(--color-black);
   border-bottom: 1px solid var(--color-gray);
-  z-index: 101;
-  pointer-events: auto;
+  height: 50px;
 }
 
 .view-tabs .tab {
   flex: 1;
   max-width: 200px;
-  padding: 16px 24px;
+  padding: 12px 24px;
   font-size: 14px;
   font-weight: 600;
   background-color: transparent;
@@ -94,9 +89,6 @@
   border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: all 150ms ease;
-  pointer-events: auto;
-  position: relative;
-  z-index: 102;
   user-select: none;
 }
 
@@ -110,9 +102,9 @@
 }
 
 .team-iq-content {
-  padding-top: 180px;
+  padding-top: 170px; /* 80px header-top + 40px summary + 50px tabs */
   padding-bottom: 48px;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 170px);
 }
 
 .roster-view {
@@ -516,12 +508,8 @@
     gap: 12px;
   }
 
-  .view-tabs {
-    top: auto;
-  }
-
   .team-iq-content {
-    padding-top: 220px;
+    padding-top: 200px;
   }
 
   .depth-chart-grid {

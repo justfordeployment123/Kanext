@@ -119,6 +119,14 @@ const TeamIQPage = () => {
 
   const displayRoster = teamState.roster && teamState.roster.length > 0 ? teamState.roster : sampleRoster;
 
+  // Simple direct handlers - no useCallback to avoid any closure issues
+  const handleViewChange = (view) => {
+    console.log('[LOGIC HOOK] Switching view to:', view, 'current:', activeView);
+    if (activeView !== view) {
+      setActiveView(view);
+    }
+  };
+
   useEffect(() => {
     if (!isAuthenticated() || !coachProfile) {
       navigate('/login');
@@ -204,36 +212,28 @@ const TeamIQPage = () => {
             <span className="value">{teamMetrics.confidenceAvg}%</span>
           </div>
         </div>
+
+        {/* View Tabs - Moved inside header */}
+        <div className="view-tabs">
+          <button 
+            type="button"
+            className={`tab ${activeView === 'roster' ? 'active' : ''}`}
+            onClick={() => handleViewChange('roster')}
+          >
+            Roster View
+          </button>
+          <button 
+            type="button"
+            className={`tab ${activeView === 'depth' ? 'active' : ''}`}
+            onClick={() => handleViewChange('depth')}
+          >
+            Depth Chart
+          </button>
+        </div>
       </header>
 
-      {/* View Tabs */}
-      <div className="view-tabs">
-        <button 
-          type="button"
-          className={`tab ${activeView === 'roster' ? 'active' : ''}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log('[LOGIC HOOK] Switching to Roster View, current:', activeView);
-            setActiveView('roster');
-          }}
-        >
-          Roster View
-        </button>
-        <button 
-          type="button"
-          className={`tab ${activeView === 'depth' ? 'active' : ''}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log('[LOGIC HOOK] Switching to Depth Chart View, current:', activeView);
-            setActiveView('depth');
-          }}
-        >
-          Depth Chart
-        </button>
-      </div>
-
       {/* Content Area */}
-      <div className="team-iq-content">
+      <div className="team-iq-content" key={activeView}>
         {/* Roster View */}
         {activeView === 'roster' && (
           <div className="roster-view">
