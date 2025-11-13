@@ -209,14 +209,22 @@ const TeamIQPage = () => {
       {/* View Tabs */}
       <div className="view-tabs">
         <button 
+          type="button"
           className={`tab ${activeView === 'roster' ? 'active' : ''}`}
-          onClick={() => setActiveView('roster')}
+          onClick={() => {
+            console.log('[LOGIC HOOK] Switching to Roster View');
+            setActiveView('roster');
+          }}
         >
           Roster View
         </button>
         <button 
+          type="button"
           className={`tab ${activeView === 'depth' ? 'active' : ''}`}
-          onClick={() => setActiveView('depth')}
+          onClick={() => {
+            console.log('[LOGIC HOOK] Switching to Depth Chart View');
+            setActiveView('depth');
+          }}
         >
           Depth Chart
         </button>

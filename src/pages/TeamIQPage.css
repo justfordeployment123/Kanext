@@ -78,7 +78,8 @@
   display: flex;
   background-color: var(--color-black);
   border-bottom: 1px solid var(--color-gray);
-  z-index: 99;
+  z-index: 98;
+  pointer-events: auto;
 }
 
 .view-tabs .tab {
@@ -93,6 +94,9 @@
   border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: all 150ms ease;
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .view-tabs .tab.active {
