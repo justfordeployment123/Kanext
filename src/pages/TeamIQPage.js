@@ -269,11 +269,18 @@ const TeamIQPage = () => {
                         <td>{player.flags && player.flags.length > 0 ? '⚠️' : '—'}</td>
                         <td>
                           <button 
-                            className="action-btn delete"
+                            type="button"
+                            className={`action-btn ${teamState.roster && teamState.roster.length > 0 ? 'delete' : 'view'}`}
                             onClick={(e) => {
                               e.stopPropagation();
+                              e.preventDefault();
                               if (teamState.roster && teamState.roster.length > 0) {
+                                // Remove player from actual roster
                                 handleRemovePlayer(player.id);
+                              } else {
+                                // View player details (for sample data)
+                                console.log('[LOGIC HOOK] Viewing player details:', player.id);
+                                setSelectedPlayer(player);
                               }
                             }}
                           >
