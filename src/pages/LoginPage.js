@@ -326,10 +326,11 @@ const LoginPage = () => {
                 >
                   <option value="">Select System</option>
                   <option value="Five-Out">Five-Out</option>
-                  <option value="Motion">Motion</option>
                   <option value="Pace & Space">Pace & Space</option>
-                  <option value="Post-Centric">Post-Centric</option>
+                  <option value="Motion / Read & React">Motion / Read & React</option>
                   <option value="Moreyball">Moreyball</option>
+                  <option value="Post-Centric">Post-Centric</option>
+                  <option value="Spread Pick-and-Roll">Spread Pick-and-Roll</option>
                 </select>
               </div>
               <div className="form-group">
@@ -340,10 +341,11 @@ const LoginPage = () => {
                 >
                   <option value="">Select System</option>
                   <option value="Pack Line">Pack Line</option>
-                  <option value="Havoc">Havoc</option>
-                  <option value="Switch">Switch</option>
-                  <option value="Zone">Zone</option>
+                  <option value="Switch-Heavy">Switch-Heavy</option>
                   <option value="No-Middle">No-Middle</option>
+                  <option value="Havoc">Havoc</option>
+                  <option value="Base Man-to-Man">Base Man-to-Man</option>
+                  <option value="Zone">Zone</option>
                 </select>
               </div>
               <button type="submit" className="submit-btn" disabled={loading}>
